@@ -1,5 +1,5 @@
 # Use uma imagem base do PHP (CLI)
-FROM php:8.0-cli
+FROM php:8.4-cli
 
 # Define o diretório de trabalho no container
 WORKDIR /app
