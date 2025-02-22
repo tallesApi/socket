@@ -8,8 +8,13 @@ WORKDIR /app
 COPY . /app
 
 # Instala dependências do sistema e extensões PHP necessárias
-RUN apt-get update && apt-get install -y unzip libzip-dev libpq-dev libonig-dev git && \
-    docker-php-ext-install zip pdo pdo_mysql sockets
+RUN apt-get update && apt-get install -y \
+    unzip \
+    libzip-dev \
+    libpq-dev \
+    libonig-dev \
+    git && \
+    docker-php-ext-install zip pdo pdo_mysql sockets mbstring
 
 # Instala o Composer globalmente
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -17,8 +22,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Garante que o Composer usa a versão mais recente
 RUN composer self-update
 
-# Força a instalação das dependências
-RUN composer install
+# Garante permissões corretas no diretório do projeto
+RUN chmod -R 777 /app
+
+# Limpa o cache do Composer
+RUN composer clear-cache
+
+# Força a instalação das dependências sem interação
+RUN composer install --no-interaction --no-progress --optimize-autoloader || composer update --no-interaction --no-progress --optimize-autoloader
 
 # Expõe a porta usada pelo WebSocket
 EXPOSE 8080

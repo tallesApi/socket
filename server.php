@@ -48,7 +48,7 @@ $server = IoServer::factory(
             new Chat()
         )
     ),
-    $port
+    (int) $port
 );
 
 echo "Servidor WebSocket rodando na porta {$port}\n";
