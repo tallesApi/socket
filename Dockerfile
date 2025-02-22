@@ -14,9 +14,6 @@ RUN apt-get update && apt-get install -y unzip libzip-dev libpq-dev libonig-dev 
 # Instala o Composer globalmente
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Verifica se composer.json existe antes de rodar o install
-RUN composer install --no-interaction --no-dev --optimize-autoloader; fi
-
 # Expõe a porta usada pelo WebSocket
 EXPOSE 8080
 
