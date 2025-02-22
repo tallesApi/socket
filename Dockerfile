@@ -29,7 +29,7 @@ RUN chmod -R 777 /app
 RUN composer clear-cache
 
 # Força a instalação das dependências sem interação
-RUN composer install --no-interaction --no-progress --optimize-autoloader || composer update --no-interaction --no-progress --optimize-autoloader
+RUN composer install
 
 # Expõe a porta usada pelo WebSocket
 EXPOSE 8080
