@@ -1,8 +1,11 @@
 <?php
-require dirname(__DIR__) . 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use Ratchet\Http\HttpServer;
+use Ratchet\Server\IoServer;
+use Ratchet\WebSocket\WsServer;
 
 class Chat implements MessageComponentInterface {
     protected $clients;
@@ -39,7 +42,14 @@ class Chat implements MessageComponentInterface {
 // Usa a variável de ambiente PORT definida pelo Railway ou 8080 como padrão
 $port = getenv('PORT') ?: 8080;
 
-// Escuta em todas as interfaces
-$app = new Ratchet\App('0.0.0.0', $port);
-$app->route('/chat', new Chat, ['*']);
-$app->run();
+$server = IoServer::factory(
+    new HttpServer(
+        new WsServer(
+            new Chat()
+        )
+    ),
+    $port
+);
+
+echo "Servidor WebSocket rodando na porta {$port}\n";
+$server->run();
