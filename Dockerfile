@@ -18,7 +18,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer self-update
 
 # Força a instalação das dependências
-RUN composer install --no-interaction --no-dev --optimize-autoloader
+RUN composer install
 
 # Expõe a porta usada pelo WebSocket
 EXPOSE 8080
