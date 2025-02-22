@@ -1,5 +1,5 @@
 <?php
-require dirname(__DIR__) . '/websocket-php/vendor/autoload.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
